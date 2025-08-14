@@ -1,0 +1,615 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IHooks",
+  "sourceName": "contracts/interfaces/IHooks.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "OrderId",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "toUnit",
+              "type": "uint64"
+            }
+          ],
+          "internalType": "struct IBookManager.CancelParams",
+          "name": "params",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint64",
+          "name": "canceledUnit",
+          "type": "uint64"
+        },
+        {
+          "internalType": "bytes",
+          "name": "hookData",
+          "type": "bytes"
+        }
+      ],
+      "name": "afterCancel",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "internalType": "OrderId",
+          "name": "orderId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint64",
+          "name": "claimedUnit",
+          "type": "uint64"
+        },
+        {
+          "internalType": "bytes",
+          "name": "hookData",
+          "type": "bytes"
+        }
+      ],
+      "name": "afterClaim",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "Currency",
+                  "name": "base",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "unitSize",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "Currency",
+                  "name": "quote",
+                  "type": "address"
+                },
+                {
+                  "internalType": "FeePolicy",
+                  "name": "makerPolicy",
+                  "type": "uint24"
+                },
+                {
+                  "internalType": "contract IHooks",
+                  "name": "hooks",
+                  "type": "address"
+                },
+                {
+                  "internalType": "FeePolicy",
+                  "name": "takerPolicy",
+                  "type": "uint24"
+                }
+              ],
+              "internalType": "struct IBookManager.BookKey",
+              "name": "key",
+              "type": "tuple"
+            },
+            {
+              "internalType": "Tick",
+              "name": "tick",
+              "type": "int24"
+            },
+            {
+              "internalType": "uint64",
+              "name": "unit",
+              "type": "uint64"
+            },
+            {
+              "internalType": "address",
+              "name": "provider",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct IBookManager.MakeParams",
+          "name": "params",
+          "type": "tuple"
+        },
+        {
+          "internalType": "OrderId",
+          "name": "orderId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "hookData",
+          "type": "bytes"
+        }
+      ],
+      "name": "afterMake",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "Currency",
+              "name": "base",
+              "type": "address"
+            },
+            {
+              "internalType": "uint64",
+              "name": "unitSize",
+              "type": "uint64"
+            },
+            {
+              "internalType": "Currency",
+              "name": "quote",
+              "type": "address"
+            },
+            {
+              "internalType": "FeePolicy",
+              "name": "makerPolicy",
+              "type": "uint24"
+            },
+            {
+              "internalType": "contract IHooks",
+              "name": "hooks",
+              "type": "address"
+            },
+            {
+              "internalType": "FeePolicy",
+              "name": "takerPolicy",
+              "type": "uint24"
+            }
+          ],
+          "internalType": "struct IBookManager.BookKey",
+          "name": "key",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes",
+          "name": "hookData",
+          "type": "bytes"
+        }
+      ],
+      "name": "afterOpen",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "Currency",
+                  "name": "base",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "unitSize",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "Currency",
+                  "name": "quote",
+                  "type": "address"
+                },
+                {
+                  "internalType": "FeePolicy",
+                  "name": "makerPolicy",
+                  "type": "uint24"
+                },
+                {
+                  "internalType": "contract IHooks",
+                  "name": "hooks",
+                  "type": "address"
+                },
+                {
+                  "internalType": "FeePolicy",
+                  "name": "takerPolicy",
+                  "type": "uint24"
+                }
+              ],
+              "internalType": "struct IBookManager.BookKey",
+              "name": "key",
+              "type": "tuple"
+            },
+            {
+              "internalType": "Tick",
+              "name": "tick",
+              "type": "int24"
+            },
+            {
+              "internalType": "uint64",
+              "name": "maxUnit",
+              "type": "uint64"
+            }
+          ],
+          "internalType": "struct IBookManager.TakeParams",
+          "name": "params",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint64",
+          "name": "takenUnit",
+          "type": "uint64"
+        },
+        {
+          "internalType": "bytes",
+          "name": "hookData",
+          "type": "bytes"
+        }
+      ],
+      "name": "afterTake",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "OrderId",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "toUnit",
+              "type": "uint64"
+            }
+          ],
+          "internalType": "struct IBookManager.CancelParams",
+          "name": "params",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes",
+          "name": "hookData",
+          "type": "bytes"
+        }
+      ],
+      "name": "beforeCancel",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "internalType": "OrderId",
+          "name": "orderId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "hookData",
+          "type": "bytes"
+        }
+      ],
+      "name": "beforeClaim",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "Currency",
+                  "name": "base",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "unitSize",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "Currency",
+                  "name": "quote",
+                  "type": "address"
+                },
+                {
+                  "internalType": "FeePolicy",
+                  "name": "makerPolicy",
+                  "type": "uint24"
+                },
+                {
+                  "internalType": "contract IHooks",
+                  "name": "hooks",
+                  "type": "address"
+                },
+                {
+                  "internalType": "FeePolicy",
+                  "name": "takerPolicy",
+                  "type": "uint24"
+                }
+              ],
+              "internalType": "struct IBookManager.BookKey",
+              "name": "key",
+              "type": "tuple"
+            },
+            {
+              "internalType": "Tick",
+              "name": "tick",
+              "type": "int24"
+            },
+            {
+              "internalType": "uint64",
+              "name": "unit",
+              "type": "uint64"
+            },
+            {
+              "internalType": "address",
+              "name": "provider",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct IBookManager.MakeParams",
+          "name": "params",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes",
+          "name": "hookData",
+          "type": "bytes"
+        }
+      ],
+      "name": "beforeMake",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "Currency",
+              "name": "base",
+              "type": "address"
+            },
+            {
+              "internalType": "uint64",
+              "name": "unitSize",
+              "type": "uint64"
+            },
+            {
+              "internalType": "Currency",
+              "name": "quote",
+              "type": "address"
+            },
+            {
+              "internalType": "FeePolicy",
+              "name": "makerPolicy",
+              "type": "uint24"
+            },
+            {
+              "internalType": "contract IHooks",
+              "name": "hooks",
+              "type": "address"
+            },
+            {
+              "internalType": "FeePolicy",
+              "name": "takerPolicy",
+              "type": "uint24"
+            }
+          ],
+          "internalType": "struct IBookManager.BookKey",
+          "name": "key",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes",
+          "name": "hookData",
+          "type": "bytes"
+        }
+      ],
+      "name": "beforeOpen",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "Currency",
+                  "name": "base",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "unitSize",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "Currency",
+                  "name": "quote",
+                  "type": "address"
+                },
+                {
+                  "internalType": "FeePolicy",
+                  "name": "makerPolicy",
+                  "type": "uint24"
+                },
+                {
+                  "internalType": "contract IHooks",
+                  "name": "hooks",
+                  "type": "address"
+                },
+                {
+                  "internalType": "FeePolicy",
+                  "name": "takerPolicy",
+                  "type": "uint24"
+                }
+              ],
+              "internalType": "struct IBookManager.BookKey",
+              "name": "key",
+              "type": "tuple"
+            },
+            {
+              "internalType": "Tick",
+              "name": "tick",
+              "type": "int24"
+            },
+            {
+              "internalType": "uint64",
+              "name": "maxUnit",
+              "type": "uint64"
+            }
+          ],
+          "internalType": "struct IBookManager.TakeParams",
+          "name": "params",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes",
+          "name": "hookData",
+          "type": "bytes"
+        }
+      ],
+      "name": "beforeTake",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

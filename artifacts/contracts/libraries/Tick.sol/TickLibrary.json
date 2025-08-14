@@ -1,0 +1,26 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "TickLibrary",
+  "sourceName": "contracts/libraries/Tick.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "InvalidPrice",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidTick",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "TickOverflow",
+      "type": "error"
+    }
+  ],
+  "bytecode": "0x6055604b600b8282823980515f1a607314603f577f4e487b71000000000000000000000000000000000000000000000000000000005f525f60045260245ffd5b305f52607381538281f3fe730000000000000000000000000000000000000000301460806040525f80fdfea264697066735822122033a298473402528f313f4e0e04e6d85412b7f153d706ebd9abac30a3a7f37d6664736f6c63430008180033",
+  "deployedBytecode": "0x730000000000000000000000000000000000000000301460806040525f80fdfea264697066735822122033a298473402528f313f4e0e04e6d85412b7f153d706ebd9abac30a3a7f37d6664736f6c63430008180033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
