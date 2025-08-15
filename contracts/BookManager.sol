@@ -30,7 +30,7 @@ contract BookManager is IBookManager, Ownable2Step, ERC721Permit {
     using FeePolicyLibrary for FeePolicy;
     using Hooks for IHooks;
 
-    string public override baseURI;
+    string public override baseURI; // slot 10
     string public override contractURI;
     address public override defaultProvider;
 
@@ -84,7 +84,10 @@ contract BookManager is IBookManager, Ownable2Step, ERC721Permit {
     }
 
     function open(BookKey calldata key, bytes calldata hookData) external onlyByLocker {
+        // @dev Also, the book opener should set unit size at least circulatingTotalSupply / type(uint64).max to avoid overflow.
+        //      But it is not checked here because it is not possible to check it without knowing circulatingTotalSupply.
         if (key.unitSize == 0) revert InvalidUnitSize();
+
         FeePolicy makerPolicy = key.makerPolicy;
         FeePolicy takerPolicy = key.takerPolicy;
         if (!(makerPolicy.isValid() && takerPolicy.isValid())) revert InvalidFeePolicy();
@@ -98,6 +101,7 @@ contract BookManager is IBookManager, Ownable2Step, ERC721Permit {
         if (!hooks.isValidHookAddress()) revert Hooks.HookAddressNotValid(address(hooks));
 
         hooks.beforeOpen(key, hookData);
+
         BookId id = key.toId();
         _books[id].open(key);
 
@@ -107,16 +111,22 @@ contract BookManager is IBookManager, Ownable2Step, ERC721Permit {
     }
 
     function lock(address locker, bytes calldata data) external returns (bytes memory result) {
+        // Add the locker to the stack
         Lockers.push(locker, msg.sender);
+
+        // The locker does everything in this callback, including paying what they owe via calls to settle
         result = ILocker(locker).lockAcquired(msg.sender, data);
+
+        // Remove the locker from the stack
         Lockers.pop();
 
         (uint128 length, uint128 nonzeroDeltaCount) = Lockers.lockData();
+        // @dev The locker must settle all currency balances to zero.
         if (length == 0 && nonzeroDeltaCount != 0) revert CurrencyNotSettled();
     }
 
     function getCurrencyDelta(address locker, Currency currency) external view returns (int256) {
-        CurrencyDelta.get(locker, currency);
+        return CurrencyDelta.get(locker, currency);
     }
 
     function getLock(uint256 i) external view returns (address, address) {
@@ -152,7 +162,7 @@ contract BookManager is IBookManager, Ownable2Step, ERC721Permit {
     }
 
     function make(MakeParams calldata params, bytes calldata hookData)
-        external 
+        external
         onlyByLocker
         returns (OrderId id, uint256 quoteAmount)
     {
@@ -168,7 +178,10 @@ contract BookManager is IBookManager, Ownable2Step, ERC721Permit {
         id = OrderIdLibrary.encode(bookId, params.tick, orderIndex);
         int256 quoteDelta;
         unchecked {
-            quoteAmount =  uint256(params.unit) * params.key.unitSize;
+            // @dev uint64 * uint64 < type(uint256).max
+            quoteAmount = uint256(params.unit) * params.key.unitSize;
+
+            // @dev 0 < uint64 * uint64 + rate * uint64 * uint64 < type(int256).max
             quoteDelta = int256(quoteAmount);
             if (params.key.makerPolicy.usesQuote()) {
                 quoteDelta += params.key.makerPolicy.calculateFee(quoteAmount, false);
@@ -218,7 +231,6 @@ contract BookManager is IBookManager, Ownable2Step, ERC721Permit {
         emit Take(bookId, msg.sender, params.tick, takenUnit);
 
         params.key.hooks.afterTake(params, takenUnit, hookData);
-
     }
 
     function cancel(CancelParams calldata params, bytes calldata hookData)
@@ -244,7 +256,7 @@ contract BookManager is IBookManager, Ownable2Step, ERC721Permit {
         }
 
         if (pendingUnit == 0) _burn(OrderId.unwrap(params.id));
-        
+
         _accountDelta(key.quote, int256(canceledAmount));
 
         emit Cancel(params.id, canceledUnit);
@@ -263,7 +275,6 @@ contract BookManager is IBookManager, Ownable2Step, ERC721Permit {
             (bookId, tick, orderIndex) = id.decode();
             book = _books[bookId];
         }
-
         IBookManager.BookKey memory key = book.key;
 
         key.hooks.beforeClaim(id, hookData);
@@ -281,11 +292,10 @@ contract BookManager is IBookManager, Ownable2Step, ERC721Permit {
 
             FeePolicy makerPolicy = key.makerPolicy;
             FeePolicy takerPolicy = key.takerPolicy;
-
             if (takerPolicy.usesQuote()) {
                 quoteFee = takerPolicy.calculateFee(claimedInQuote, true);
             } else {
-                baseFee = makerPolicy.calculateFee(claimedAmount, true);
+                baseFee = takerPolicy.calculateFee(claimedAmount, true);
             }
 
             if (makerPolicy.usesQuote()) {
